@@ -1,0 +1,10 @@
+[sortierung]
+reihenfolge = "absteigend"
+schlüssel = ["id", "plz"]
+
+[filter]
+land = "Deutschland"
+postversand = "Ja"
+
+[duplikate]
+schlüssel = ["id"]

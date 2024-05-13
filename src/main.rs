@@ -60,6 +60,30 @@ pub fn dump(records: Vec<Record>) -> Result<String, Box<dyn Error>> {
     Ok(csv_data)
 }
 
+#[derive(Deserialize)]
+struct Config {
+    filter: Filter,
+    sortierung: Sortierung,
+    duplikate: Duplikate,
+}
+
+#[derive(Deserialize)]
+struct Filter {
+    land: String,
+    postversand: bool,
+}
+
+#[derive(Deserialize)]
+struct Sortierung {
+    schlüssel: Vec<String>,
+    reihenfolge: String, // aufsteigend/absteigend
+}
+
+#[derive(Deserialize)]
+struct Duplikate {
+    schlüssel: Vec<String>, 
+}
+
 fn main() {
     let mut all_content = String::new();
 
