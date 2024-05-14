@@ -34,6 +34,7 @@ jobs:
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: filter, delete
+          archive: el-$target
           target: ${{ matrix.target }}
           tar: unix
           zip: windows
