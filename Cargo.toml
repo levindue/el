@@ -1,9 +1,16 @@
 [package]
 name = "el"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
+
+[[bin]]
+name = "filter"
+path = "src/filter.rs"
+
+[[bin]]
+name = "delete"
+path = "src/delete.rs"
 
 [dependencies]
 csv = "1.3.0"
 serde = { version = "1.0.201", features = ["derive"] }
-toml = "0.8.12"

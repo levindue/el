@@ -1,6 +1,5 @@
-use std::error::Error;
-use std::fs;
 use serde::*;
+use std::error::Error;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Record {
@@ -58,68 +57,4 @@ pub fn dump(records: Vec<Record>) -> Result<String, Box<dyn Error>> {
     let csv_data = String::from_utf8(wtr.into_inner()?.to_vec())?;
 
     Ok(csv_data)
-}
-
-#[derive(Deserialize)]
-struct Config {
-    filter: Filter,
-    sortierung: Sortierung,
-    duplikate: Duplikate,
-}
-
-#[derive(Deserialize)]
-struct Filter {
-    land: String,
-    postversand: bool,
-}
-
-#[derive(Deserialize)]
-struct Sortierung {
-    schlüssel: Vec<String>,
-    reihenfolge: String, // aufsteigend/absteigend
-}
-
-#[derive(Deserialize)]
-struct Duplikate {
-    schlüssel: Vec<String>, 
-}
-
-fn main() {
-    let mut all_content = String::new();
-
-    for arg in std::env::args().skip(1) {
-        if let Ok(content) = fs::read_to_string(&arg) {
-            all_content.push_str(&content);
-        }
-    }
-
-    let records = match parse(&all_content) {
-        Ok(records) => records,
-        Err(err) => {
-            eprintln!("Error parsing input files: {}", err);
-            return;
-        }
-    };
-
-    let mut unique_records: Vec<Record> = Vec::new();
-    let mut seen_ids = std::collections::HashSet::new();
-    for record in records {
-        if seen_ids.insert(record.kontakt_id) {
-            unique_records.push(record);
-        }
-    }
-
-    let csv_data = match dump(unique_records) {
-        Ok(csv_data) => csv_data,
-        Err(err) => {
-            eprintln!("Error dumping records to CSV: {}", err);
-            return;
-        }
-    };
-
-    if let Err(err) = fs::write("out.csv", csv_data) {
-        eprintln!("Error writing to file: {}", err);
-    } else {
-        println!("Output written to out.csv");
-    }
 }
