@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: filter, delete
+          bin: filter,delete
           archive: el-$target
           target: ${{ matrix.target }}
           tar: unix
