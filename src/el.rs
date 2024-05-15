@@ -38,7 +38,7 @@ pub struct Record {
 
 pub fn parse(data: &str) -> Result<Vec<Record>, Box<dyn Error>> {
     let mut rdr = ReaderBuilder::new()
-        .delimiter(b';')
+        .delimiter(b',')
         .from_reader(data.as_bytes());
 
     let mut records: Vec<Record> = Vec::new();
