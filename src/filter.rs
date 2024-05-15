@@ -34,6 +34,13 @@ fn main() {
             white.push(record.clone());
         }
     }
+    white.sort_by(|a, b| {
+        if a.plz != b.plz {
+            a.plz.cmp(&b.plz)
+        } else {
+            a.organisation_id.unwrap().cmp(&b.organisation_id.unwrap())
+        }
+    });
 
     let mut brown: Vec<Record> = Vec::new();
     let mut white_counts: HashMap<u32, usize> = HashMap::new();
