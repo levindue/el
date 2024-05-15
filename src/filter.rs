@@ -18,7 +18,7 @@ fn main() {
     let records = match parse(&all_content) {
         Ok(records) => records,
         Err(err) => {
-            eprintln!("Error parsing input files: {}", err);
+            eprintln!("Fehler beim lesen der Eingabedatei: {}", err);
             return;
         }
     };
