@@ -1,5 +1,6 @@
 use serde::*;
 use std::error::Error;
+use csv::ReaderBuilder;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Record {
@@ -36,7 +37,9 @@ pub struct Record {
 }
 
 pub fn parse(data: &str) -> Result<Vec<Record>, Box<dyn Error>> {
-    let mut rdr = csv::Reader::from_reader(data.as_bytes());
+    let mut rdr = ReaderBuilder::new()
+        .delimiter(b';')
+        .from_reader(data.as_bytes());
 
     let mut records: Vec<Record> = Vec::new();
 
