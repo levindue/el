@@ -39,9 +39,7 @@ pub fn parse_brevo(data: &str, mode: Mode) -> Result<Vec<String>, Box<dyn Error>
 
 pub fn filter_records(records: Vec<Record>, emails_to_remove: Vec<String>) -> Vec<Record> {
     records
-        .iter()
-        .cloned()
-        .filter(|record| !emails_to_remove.contains(&record.email))
+        .iter().filter(|&record| !emails_to_remove.contains(&record.email)).cloned()
         .collect()
 }
 
