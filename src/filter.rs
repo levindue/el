@@ -15,7 +15,9 @@ fn main() {
         }
     }
 
-    let records = match parse(&all_content) {
+    let mode = determine_mode(&all_content);
+
+    let records = match parse(&all_content, mode) {
         Ok(records) => records,
         Err(err) => {
             eprintln!("Fehler beim lesen der Eingabedatei: {}", err);

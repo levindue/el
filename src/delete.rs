@@ -18,7 +18,7 @@ struct Brevo {
 }
 
 pub fn parse_brevo(data: &str, mode: Mode) -> Result<Vec<String>, Box<dyn Error>> {
-        let delimiter = match mode {
+    let delimiter = match mode {
         Mode::Comma => b',',
         Mode::Semi => b';',
     };
@@ -65,10 +65,10 @@ fn main() {
     };
 
     let brevo_data = fs::read_to_string(brevo_file).unwrap();
-    let brevo_emails = parse_brevo(&brevo_data, Mode::Semi).unwrap();
+    let brevo_emails = parse_brevo(&brevo_data, determine_mode(&brevo_data)).unwrap();
 
     let record_data = fs::read_to_string(record_file).unwrap();
-    let mut records = parse(&record_data).unwrap();
+    let mut records = parse(&record_data, determine_mode(&record_data)).unwrap();
 
     records = filter_records(records, brevo_emails);
 

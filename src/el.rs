@@ -41,9 +41,26 @@ pub enum Mode {
     Semi,
 }
 
-pub fn parse(data: &str) -> Result<Vec<Record>, Box<dyn Error>> {
+pub fn determine_mode(content: &str) -> Mode {
+    for c in content.chars() {
+        match c {
+            ',' => return Mode::Comma,
+            ';' => return Mode::Semi,
+            _ => continue,
+        }
+    }
+
+    Mode::Comma
+}
+
+pub fn parse(data: &str, mode: Mode) -> Result<Vec<Record>, Box<dyn Error>> {
+    let delimiter = match mode {
+        Mode::Comma => b',',
+        Mode::Semi => b';',
+    };
+
     let mut rdr = ReaderBuilder::new()
-        .delimiter(b',')
+        .delimiter(delimiter)
         .from_reader(data.as_bytes());
 
     let mut records: Vec<Record> = Vec::new();
