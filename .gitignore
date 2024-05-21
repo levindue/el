@@ -1,2 +1,4 @@
 /target
 Cargo.lock
+raw.csv
+brevo.csv

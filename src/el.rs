@@ -36,6 +36,11 @@ pub struct Record {
     pub email_werbung: String,
 }
 
+pub enum Mode {
+    Comma,
+    Semi,
+}
+
 pub fn parse(data: &str) -> Result<Vec<Record>, Box<dyn Error>> {
     let mut rdr = ReaderBuilder::new()
         .delimiter(b',')
