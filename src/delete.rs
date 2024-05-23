@@ -1,8 +1,8 @@
 mod el;
 use el::*;
 
-use serde::*;
 use csv::ReaderBuilder;
+use serde::*;
 
 use std::error::Error;
 use std::fs;
@@ -39,7 +39,9 @@ pub fn parse_brevo(data: &str, mode: Mode) -> Result<Vec<String>, Box<dyn Error>
 
 pub fn filter_records(records: Vec<Record>, emails_to_remove: Vec<String>) -> Vec<Record> {
     records
-        .iter().filter(|&record| !emails_to_remove.contains(&record.email)).cloned()
+        .iter()
+        .filter(|&record| !emails_to_remove.contains(&record.email))
+        .cloned()
         .collect()
 }
 
@@ -55,8 +57,10 @@ fn main() {
     let mut first_line1 = String::new();
     let mut first_line2 = String::new();
 
-    std::io::BufRead::read_line(&mut std::io::BufReader::new(&mut file1), &mut first_line1).unwrap();
-    std::io::BufRead::read_line(&mut std::io::BufReader::new(&mut file2), &mut first_line2).unwrap();
+    std::io::BufRead::read_line(&mut std::io::BufReader::new(&mut file1), &mut first_line1)
+        .unwrap();
+    std::io::BufRead::read_line(&mut std::io::BufReader::new(&mut file2), &mut first_line2)
+        .unwrap();
 
     let (brevo_file, record_file) = if first_line1.len() < first_line2.len() {
         (&file_names[0], &file_names[1])

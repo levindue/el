@@ -1,6 +1,6 @@
+use csv::ReaderBuilder;
 use serde::*;
 use std::error::Error;
-use csv::ReaderBuilder;
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Record {
