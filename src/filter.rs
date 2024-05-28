@@ -5,6 +5,10 @@ use std::collections::HashMap;
 use std::fs;
 
 fn main() {
+    if std::env::args().len() < 2 {
+        std::process::exit(-1);
+    }
+
     let mut all_content = String::new();
     let mut file_names: Vec<String> = Vec::new();
 
@@ -56,7 +60,7 @@ fn main() {
                     .iter()
                     .rev()
                     .filter(|r| r.organisation_id == Some(org_id))
-                    .take(3)
+                    .take(1)
                     .cloned()
                     .collect();
 
