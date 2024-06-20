@@ -72,6 +72,7 @@ pub fn parse(data: &str, mode: Mode) -> Result<Vec<Record>, Box<dyn Error>> {
     Ok(records)
 }
 
+// TODO: add mode to the dump function to match the users input
 pub fn dump(records: Vec<Record>) -> Result<String, Box<dyn Error>> {
     let mut wtr = csv::Writer::from_writer(vec![]);
 

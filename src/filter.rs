@@ -51,24 +51,28 @@ fn main() {
     let mut brown: Vec<Record> = Vec::new();
     let mut white_counts: HashMap<u32, usize> = HashMap::new();
 
+    // Count the occurrences of each organisation_id
     for record in white.iter() {
         if let Some(org_id) = record.organisation_id {
             let count = white_counts.entry(org_id).or_insert(0);
             *count += 1;
-            if *count % 3 == 0 {
-                let last_three_records: Vec<_> = white
-                    .iter()
-                    .rev()
-                    .filter(|r| r.organisation_id == Some(org_id))
-                    .take(1)
-                    .cloned()
-                    .collect();
+        }
+    }
 
-                for r in last_three_records.iter().rev() {
-                    brown.push(r.clone());
-                }
+    // Process the records for each organisation_id that has more than 3 records
+    for (&org_id, &count) in white_counts.iter() {
+        if count > 3 {
+            let to_round = (count + 2) / 3 * 3;  // round up to the nearest multiple of 3
+            let last_records: Vec<_> = white
+                .iter()
+                .rev()
+                .filter(|r| r.organisation_id == Some(org_id))
+                .take(to_round)
+                .cloned()
+                .collect();
 
-                *count = 0;
+            for r in last_records.iter().rev() {
+                brown.push(r.clone());
             }
         }
     }
